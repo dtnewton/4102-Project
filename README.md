@@ -49,7 +49,7 @@ and
 git config --global user.email "email associated with your GitHub account"
 ```
 
-#**Before you begin to change anything be sure to run "git fetch" to pull changes other people may have made!**
+#**Before you begin to change anything be sure to run "git pull" to pull changes other people may have made!**
 
 Our .d files will be located in the ```src/``` directory. You should now be able to open
 them with your text editor. 
