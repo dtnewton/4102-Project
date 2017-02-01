@@ -13,15 +13,24 @@
 	any other text editor. D language files use the suffix ".d". Once you have saved the
 	file, you can then use your command line interface (cmder) to compile the code. 
 
-	##**Compiling Code**
+	**Compiling and Running Code**
 
 	To compile your code, you must navigate to the folder you have the .d file using the
-	command ```cd DIRECTORYNAME```. If you're using cmder, it should default to your 
-	default ```C:/Users/Name``` directory. If you need to orient yourself with where you
-	are in your computer, you can use ```ls``` to list the files and folders in your
+	command "cd DIRECTORYNAME". If you're using cmder, it should default to your 
+	default "C:/Users/Name" directory. If you need to orient yourself with where you
+	are in your computer, you can use "ls" to list the files and folders in your
 	current directory.
 
 	Once you are in the directory with your saved .d file, you can compile it with the
-	command ```dmd filename.d```. This will compile your code into an executable file
+	command "dmd filename.d". This will compile your code into an executable file
 	located in the same directory. You can then run the .exe by typing the filename
 	along with the .exe extension.
+
+	**Working through Git**
+
+	We will be using Git to collaborate on the project. To begin, you need to clone
+	the current repository to your machine. Be sure you are currently in the 
+	directory you wish to clone the project and use the command
+	```
+	git clone https://github.com/mjohn365/4102-Project
+	```. 
