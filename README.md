@@ -17,7 +17,7 @@ file, you can then use your command line interface (cmder) to compile the code.
 
 To compile your code, you must navigate to the folder you have the .d file using the
 command ```cd DIRECTORYNAME```. If you're using cmder, it should default to your 
-default "C:/Users/Name" directory. If you need to orient yourself with where you
+default ```C:/Users/Name``` directory. If you need to orient yourself with where you
 are in your computer, you can use ```ls``` to list the files and folders in your
 current directory.
 
@@ -49,16 +49,15 @@ and
 git config --global user.email "email associated with your GitHub account"
 ```
 
-###**Before you begin to change anything be sure to run "git fetch" to pull changes
-other people may have made!**
+#**Before you begin to change anything be sure to run "git fetch" to pull changes other people may have made!**
 
-Our .d files will be located in the src/ directory. You should now be able to open
+Our .d files will be located in the ```src/``` directory. You should now be able to open
 them with your text editor. 
 
 To keep it simple, we won't use branches since we only have one program. Doing this,
-we run the risk of overwriting each other's changes. Just send a message in Slack
+we run the risk of overwriting each other's changes. *Just send a message in Slack
 if you are about to work, then again to say when you are finished and have pushed
-your changes.
+your changes.*
 
 Once you have made any changes, be sure you can compile and execute the code you
 added. If everything is good to go, you can run
