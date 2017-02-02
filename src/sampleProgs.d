@@ -4,7 +4,7 @@ import std.string;
 
 void main() {
 
-	writeln("Test Push #1");
+	
 
 	//Part 1: Major Data Structures
 
@@ -23,7 +23,31 @@ void main() {
 	writeln("\nHow many days until this assignment is due?: ");
 	//The space before %s prevents the enter key from holding up output
 	readf(" %s", &days);
-	writeln("There are ", days, " days left for this assignment.");
+	
+	
 
 	//Part 3: Common Control Structures
+	
+	//simple if-else using previous days-til-due info
+	if (days < 1)
+	{
+		writeln("\nAssignment is past due!");
+	}
+	else
+	{
+		writeln("\nThere are still ", days, " days left for this assignment.");
+	}
+	
+	//random nested loop, not really meaningful just an example.
+	char[4] letters = ['a','b','c','d'];
+	int i,j;
+	writeln("");
+	for (i=0; i < 4; i++)
+	{
+		for (j = 1; j < 3; j ++){
+			write(letters[i], " - ", j, " ");
+		}
+		write("\n");
+	}
+
 }
