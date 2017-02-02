@@ -4,6 +4,8 @@ import std.string;
 
 void main() {
 
+	writeln("Test Push #1");
+
 	//Part 1: Major Data Structures
 
 
