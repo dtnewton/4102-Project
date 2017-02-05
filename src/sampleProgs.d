@@ -8,9 +8,21 @@ void main() {
 
 	//Part 1: Major Data Structures
 
+	//Example of an associative array
+	int[string] aaTest ; //array of integers with string keys
+	int val;
+	aaTest["one"] = 1 ;
+	aaTest["two"] = 2 ;
+	aaTest["three"] = 3;
+	aaTest["four"] = 4;
+
+	writeln("Here are the values of the keys and values for the associative array: ");
+	foreach (element; aaTest.byKey) {
+      writeln("key: ", element, ", value: ", aaTest[element]);
+   }
+   writeln("--------------------"); 
 
 	//Part 2: I/O
-
 	//An array of String type
 	char[] state;
 	write("How are you doing today?: ");
