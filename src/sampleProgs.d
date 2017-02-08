@@ -1,6 +1,8 @@
 import std.stdio;
 //Allows the use of string methods like strip()
 import std.string;
+import std.concurrency; 
+import core.thread;
 
 struct MovieData
 {
@@ -46,9 +48,9 @@ void main() {
 
 	//Simple concurrency example with message passing
 	writeln("Main is executing from ", thisTid());
-  spawn(&example, thisTid());
-  auto val = receiveOnly!string();
-  auto message = val;
+  spawn(&example, thisTid()); //creates a new thread with example() and passes the thread ID as a parameter
+  auto val = receiveOnly!string(); //tells val to only accept string values
+  auto message = val; //val is received from example()
   writeln("Back in ", thisTid(), " received from the created process: ", message);
 
 	//Example of an associative array
@@ -107,7 +109,7 @@ void main() {
 	void example(Tid id)
 	{
 	  writeln("example() is executing from ", thisTid(), " and was started from ", ownerTid());
-	  send(id, "This was sent from the created process");
+	  send(id, "This was sent from the created process"); //sends the message to id which was passed from main()
 	}
 
 }
