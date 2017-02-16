@@ -48,11 +48,11 @@ void main() {
 
 	//Simple concurrency example with message passing
 	writeln("Main is executing from ", thisTid());
-  spawn(&example, thisTid()); //creates a new thread with example() and passes the thread ID as a parameter
-  auto val = receiveOnly!string(); //tells val to only accept string values
-  auto message = val; //val is received from example()
-  writeln("Back in ", thisTid(), " received from the created process: ", message);
-  writeln("--------------------");
+  	spawn(&example, thisTid()); //creates a new thread with example() and passes the thread ID as a parameter
+  	auto val = receiveOnly!string(); //tells val to only accept string values
+  	auto message = val; //val is received from example()
+  	writeln("Back in ", thisTid(), " received from the created process: ", message);
+  	writeln("--------------------");
 
 	//Example of an associative array
 	int[string] aaTest ; //array of integers with string keys
