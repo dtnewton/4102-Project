@@ -52,6 +52,7 @@ void main() {
   auto val = receiveOnly!string(); //tells val to only accept string values
   auto message = val; //val is received from example()
   writeln("Back in ", thisTid(), " received from the created process: ", message);
+  writeln("--------------------");
 
 	//Example of an associative array
 	int[string] aaTest ; //array of integers with string keys
@@ -105,11 +106,10 @@ void main() {
 		}
 		write("\n");
 	}
+}
 
-	void example(Tid id)
-	{
-	  writeln("example() is executing from ", thisTid(), " and was started from ", ownerTid());
-	  send(id, "This was sent from the created process"); //sends the message to id which was passed from main()
-	}
-
+void example(Tid id)
+{
+  writeln("example() is executing from ", thisTid(), " and was started from ", ownerTid());
+  send(id, "This was sent from the created process"); //sends the message to id which was passed from main()
 }
