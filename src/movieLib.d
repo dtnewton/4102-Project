@@ -58,17 +58,15 @@ void main()
 
 			switch(userChoice){
 				case(1):{
-					 searchByTitle(userInput);
-					 if (searchByTitle(userInput) == -1)
+					 if (searchByTitle(userInput.toLower()) == -1)
 					{
 						writeln("Not Found.");
 					}
 					else
 					{
-						Movie found = movieList[searchByTitle(userInput)];
+						Movie found = movieList[searchByTitle(userInput.toLower())];
 						writeln(found.getTitle(), " Director: ", found.getDirector());
 					}
-					writeln(userChoice);
 				}
 				case(2): searchByGenre(userInput);
 				default: break; 
