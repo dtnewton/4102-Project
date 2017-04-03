@@ -66,7 +66,7 @@ void main()
 						else
 						{
 							Movie found = movieList[searchByTitle(userInput.toLower())];
-							writeln(found.getTitle(), " Director: ", found.getDirector());
+							writeln(found.toString());
 						}
 					}
 					case(2): searchByGenre(userInput);
@@ -182,6 +182,7 @@ void addNewMovie(){
 
 	Movie newMovie = new Movie(title, director, yearReleased, duration, genre);
 	movieList ~= newMovie;
+	movieList.sort();
 }
 
 void editMovie(string title){
@@ -306,7 +307,20 @@ class Movie{
 		}
 	}
 
-	//TODO - toString?
+	
+	override string toString(){
+		string movieStr;
+		movieStr ~= this.title;
+		movieStr ~= "(";
+		movieStr ~= to!string(this.yearReleased);
+		movieStr ~= ")";
+		movieStr ~= " - Directed By ";
+		movieStr ~= this.director;
+		movieStr ~= " - Runtime: ";
+		movieStr ~= to!string(this.getDuration);
+		movieStr ~= " minutes.";
+		return movieStr;
+	}
 
 	//TODO - Deconstruct?
 
