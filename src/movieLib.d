@@ -3,6 +3,7 @@ import std.file;
 import std.conv;
 import std.string;
 import std.algorithm;
+import std.container; 
 
 Movie[] movieList;
 
@@ -29,11 +30,80 @@ void main()
 	}
 	fileIn.close();
 
+	int userChoice;
+	string userInput;
+
+	do{
+		writeln("What would you like to do?\n");
+		writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information"); 
+
+		readf("%d\n", &userChoice);
+
+		if(userChoice < 1 || userChoice > 4){
+			writeln("That input is invalid."); 
+		}
+
+	} while(userChoice < 1 || userChoice > 4); 
+
+	switch(userChoice){
+		case(1):{
+			writeln("\nSearch by:\n");
+			writeln("1) By title\n2) By genre");
+
+			readf("%d\n", &userChoice);
+
+			writeln("\nEnter what you want to search for: ");
+			readf("%s\n", &userInput);
+			userInput = strip(userInput); 
+
+			switch(userChoice){
+				case(1):{
+					 searchByTitle(userInput);
+					 if (searchByTitle(userInput) == -1)
+					{
+						writeln("Not Found.");
+					}
+					else
+					{
+						Movie found = movieList[searchByTitle(userInput)];
+						writeln(found.getTitle(), " Director: ", found.getDirector());
+					}
+					writeln(userChoice);
+				}
+				case(2): searchByGenre(userInput);
+				default: break; 
+			}
+		}
+		break; 
+
+		case(2):{
+			addNewMovie(); 
+		}
+		break;
+
+		case(3):{
+			addNewReview();
+		}
+		break;
+
+		case(4):{
+			writeln("\nEnter what you want to search for: ");
+			readf("%s\n", &userInput);
+			userInput = strip(userInput); 
+
+			editMovie(userInput); 
+		}
+		break;
+
+		default: break; 
+	}//end of switch
+
+
 
 
 	//TODO -- MUCH.
 	
-	//function calls for testing
+	/*function calls for testing
 	writeln("\nAdd New Movie Test ");
 	writeln("------------------------\n");
 	addNewMovie();
@@ -48,23 +118,7 @@ void main()
 	writeln("\nEnter search title: ");
 	readf("%s\n", &titleSearch);
 	titleSearch = strip(titleSearch); 
-
-
-	if (searchByTitle(titleSearch) == -1)
-	{
-		writeln("Not Found.");
-	}
-	else
-	{
-		Movie found = movieList[searchByTitle(titleSearch)];
-		writeln(found.getTitle(), " ", found.getDirector());
-	}
-	
-
-
-
-
-
+	titleSearch.toLower(); */
 
 	
 
@@ -82,6 +136,10 @@ void main()
 		
 	}
 	fileOut.close();
+
+}
+
+void addNewReview(){
 
 }
 
@@ -119,6 +177,11 @@ void editMovie(string title){
 
 }
 
+void deleteMovie(string title){
+	int toDelete = searchByTitle(title); 
+	movieList[toDelete] = null ;
+}
+
 /* Simple linear search that returns the index of a movie based on its title (if it exists). Returns -1 otherwise.
    Can expand on this if required.
 */
@@ -130,7 +193,7 @@ int searchByTitle(string title){
 	{
 		temp = movieList[i];
 
-		if(temp.getTitle() == title) //ignore case?
+		if(temp.getTitle().toLower() == title) //ignore case?
 		{
 			return i;
 			break;
