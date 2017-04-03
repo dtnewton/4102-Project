@@ -90,7 +90,7 @@ void main()
 				readf("%s\n", &userInput);
 				userInput = strip(userInput); 
 
-				editMovie(userInput); 
+				editMovie(userInput.toLower()); 
 			}
 			break;
 
@@ -129,10 +129,13 @@ void main()
 	
 
 	//to write data to new file after current session (for persistence)
-	File fileOut = File("moviedata2.txt", "w");//TODO - probably rewrite to same file
+	File fileOut = File("moviedata.txt", "w");//TODO - probably rewrite to same file
 	Movie temp;
 	for(int i; i < movieList.length; i++)
 	{
+		if (movieList[i] is null) {
+			continue;
+		}
 		temp = movieList[i];
 		fileOut.writeln(temp.getTitle());
 		fileOut.writeln(temp.getDirector());
@@ -160,10 +163,6 @@ void addNewMovie(){
 	readf("%s\n", &title);
 	title = strip(title); 
 
-	writeln("\nEnter the genre: ");
-	readf("%s\n", &genre);
-	genre = strip(genre);
-
 	writeln("\nEnter the director: ");
 	readf("%s\n", &director);
 	director = strip(director);  
@@ -173,14 +172,47 @@ void addNewMovie(){
 	readf("%d\n", &yearReleased); 
 
 	writeln("\nEnter the running time: ");
-	readf("%d\n", &duration); 
+	//probably writing an EOL to file
+	readf("%d\n", &duration);
+
+	writeln("\nEnter the genre: ");
+	readf("%s\n", &genre);
+	genre = strip(genre);
+	genre = genre.chomp(); 
 
 	Movie newMovie = new Movie(title, director, yearReleased, duration, genre);
 	movieList ~= newMovie;
 }
 
 void editMovie(string title){
+	int movieIndex = searchByTitle(title.toLower());
 
+	if (movieIndex != -1) {
+		int editChoice;
+
+		do {
+			writeln("What field would you like to alter?\n1) Title\n2) Genre\n3) Director\n4) Release Year\n5) Runtime\n");
+			readf("%d\n", &editChoice);
+
+			if(editChoice < 1 || editChoice > 5){
+				writeln("That input is invalid."); 
+			}
+		} while (editChoice < 1 || editChoice > 5);
+
+		switch (editChoice) {
+			case(1): {
+
+				writeln("Enter the new title: \n");
+				string newTitle;
+				readf("%s\n", &newTitle);
+				movieList[movieIndex].setTitle(newTitle);
+			}
+			default: break;
+		}
+	}
+	else {
+		writeln("Movie not found.");
+	}
 }
 
 void deleteMovie(string title){
@@ -236,6 +268,10 @@ class Movie{
 	//some getters 
 	string getTitle(){
 		return title;
+	}
+
+	void setTitle(string newTitle){
+		this.title = newTitle;
 	}
 
 	string getGenre(){
