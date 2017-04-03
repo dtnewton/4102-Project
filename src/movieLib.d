@@ -34,89 +34,97 @@ void main()
 	string userInput;
 
 	do{
-		writeln("What would you like to do?\n");
-		writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information"); 
-
-		readf("%d\n", &userChoice);
-
-		if(userChoice < 1 || userChoice > 4){
-			writeln("That input is invalid."); 
-		}
-
-	} while(userChoice < 1 || userChoice > 4); 
-
-	switch(userChoice){
-		case(1):{
-			writeln("\nSearch by:\n");
-			writeln("1) By title\n2) By genre");
+			writeln("What would you like to do?\n");
+			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit"); 
 
 			readf("%d\n", &userChoice);
 
-			writeln("\nEnter what you want to search for: ");
-			readf("%s\n", &userInput);
-			userInput = strip(userInput); 
-
-			switch(userChoice){
-				case(1):{
-					 if (searchByTitle(userInput.toLower()) == -1)
-					{
-						writeln("Not Found.");
-					}
-					else
-					{
-						Movie found = movieList[searchByTitle(userInput.toLower())];
-						writeln(found.getTitle(), " Director: ", found.getDirector());
-					}
-				}
-				case(2): searchByGenre(userInput);
-				default: break; 
+			if(userChoice < 1 || userChoice > 6){
+				writeln("That input is invalid."); 
 			}
-		}
-		break; 
 
-		case(2):{
-			addNewMovie(); 
-		}
-		break;
+		} while(userChoice < 1 || userChoice > 6); 
 
-		case(3):{
-			addNewReview();
-		}
-		break;
+	do{
+		switch(userChoice){
+			case(1):{
+				writeln("\nSearch by:\n");
+				writeln("1) By title\n2) By genre");
 
-		case(4):{
-			writeln("\nEnter what you want to search for: ");
-			readf("%s\n", &userInput);
-			userInput = strip(userInput); 
+				readf("%d\n", &userChoice);
 
-			editMovie(userInput); 
-		}
-		break;
+				writeln("\nEnter what you want to search for: ");
+				readf("%s\n", &userInput);
+				userInput = strip(userInput); 
 
-		default: break; 
-	}//end of switch
+				switch(userChoice){
+					case(1):{
+						 if (searchByTitle(userInput.toLower()) == -1)
+						{
+							writeln("Not Found.");
+						}
+						else
+						{
+							Movie found = movieList[searchByTitle(userInput.toLower())];
+							writeln(found.getTitle(), " Director: ", found.getDirector());
+						}
+					}
+					case(2): searchByGenre(userInput);
+					default: break; 
+				}
+			}
+			break; 
 
+			case(2):{
+				addNewMovie(); 
+			}
+			break;
 
+			case(3):{
+				addNewReview();
+			}
+			break;
 
+			case(4):{
+				writeln("\nEnter what you want to search for: ");
+				readf("%s\n", &userInput);
+				userInput = strip(userInput); 
 
-	//TODO -- MUCH.
-	
-	/*function calls for testing
-	writeln("\nAdd New Movie Test ");
-	writeln("------------------------\n");
-	addNewMovie();
-	
-	writeln("\nSorting List... ");
-	writeln("------------------------\n");
-	sort(movieList);
-	
-	writeln("\nSearch By Title Test ");
-	writeln("------------------------\n");
-	string titleSearch;
-	writeln("\nEnter search title: ");
-	readf("%s\n", &titleSearch);
-	titleSearch = strip(titleSearch); 
-	titleSearch.toLower(); */
+				editMovie(userInput); 
+			}
+			break;
+
+			case(5):{
+				writeln("\nEnter the title you want to delete: ");
+				readf("%s\n", &userInput);
+				userInput = strip(userInput);
+				deleteMovie(userInput.toLower()); 
+
+			}
+
+			break;
+
+			case(6): userChoice = 6; 
+
+			default: break; 
+		}//end of switch
+
+		
+		if(userChoice == 6)
+			break; 
+
+		do{
+			writeln("What would you like to do next? ");
+			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit");
+			readf("%d\n", &userChoice); 
+
+			if(userChoice < 1 || userChoice > 6){
+				writeln("That input is invalid."); 
+			}
+
+		} while(userChoice < 1 || userChoice > 6); 
+
+	}while(true);
 
 	
 
@@ -177,6 +185,7 @@ void editMovie(string title){
 
 void deleteMovie(string title){
 	int toDelete = searchByTitle(title); 
+	writeln(toDelete); 
 	movieList[toDelete] = null ;
 }
 
