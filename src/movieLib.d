@@ -133,15 +133,34 @@ void main()
 	Movie temp;
 	for(int i; i < movieList.length; i++)
 	{
-		if (movieList[i] is null) {
-			continue;
+		if(i < movieList.length - 1)
+		{
+			if (movieList[i] is null) 
+			{
+				continue;
+			}
+			temp = movieList[i];
+			fileOut.writeln(temp.getTitle());
+			fileOut.writeln(temp.getDirector());
+			fileOut.writeln(temp.getYearReleased());
+			fileOut.writeln(temp.getDuration());
+			fileOut.writeln(temp.getGenre());
 		}
-		temp = movieList[i];
-		fileOut.writeln(temp.getTitle());
-		fileOut.writeln(temp.getDirector());
-		fileOut.writeln(temp.getYearReleased());
-		fileOut.writeln(temp.getDuration());
-		fileOut.writeln(temp.getGenre());
+		else
+		{
+			if (movieList[i] is null) 
+			{
+				continue;
+			}
+
+			temp = movieList[i];
+			fileOut.writeln(temp.getTitle());
+			fileOut.writeln(temp.getDirector());
+			fileOut.writeln(temp.getYearReleased());
+			fileOut.writeln(temp.getDuration());
+			fileOut.write(temp.getGenre());
+
+		}
 		
 	}
 	fileOut.close();
