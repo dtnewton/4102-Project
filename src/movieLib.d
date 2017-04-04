@@ -227,6 +227,40 @@ void editMovie(string title){
 				readf("%s\n", &newTitle);
 				movieList[movieIndex].setTitle(newTitle);
 			}
+			break;
+
+			case(2): {
+				writeln("Enter the new genre: \n");
+				string newGenre;
+				readf("%s\n", &newGenre);
+				movieList[movieIndex].setGenre(newGenre);
+			}
+			break;
+
+			case(3): {
+				writeln("Enter the new director: \n");
+				string newDirector;
+				readf("%s\n", &newDirector);
+				movieList[movieIndex].setDirector(newDirector);
+			}
+			break;
+
+			case(4): {
+				writeln("Enter the new release year: \n");
+				uint newRelease;
+				readf("%d\n", &newRelease);
+				movieList[movieIndex].setYearReleased(newRelease);
+			}
+			break;
+
+			case(5): {
+				writeln("Enter the new runtime: \n");
+				uint newDuration;
+				readf("%d\n", &newDuration);
+				movieList[movieIndex].setDuration(newDuration);
+			}
+			break;
+
 			default: break;
 		}
 	}
@@ -298,15 +332,32 @@ class Movie{
 		return genre;
 	}
 
+	void setGenre(string newGenre){
+		this.genre = newGenre;
+	}
+
 	string getDirector(){
 		return director;
+	}
+
+	void setDirector(string newDirector){
+		this.director = newDirector;
 	}
 
 	uint getYearReleased(){
 		return yearReleased;
 	}
+
+	void setYearReleased(uint newRelease){
+		this.yearReleased = newRelease;
+	}
+
 	uint getDuration(){
 		return this.duration;
+	}
+
+	void setDuration(uint newDuration){
+		this.duration = newDuration;
 	}
 
 	//opCmp overload -- for use with sorting (by title)
