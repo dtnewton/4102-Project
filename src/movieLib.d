@@ -271,8 +271,7 @@ void editMovie(string title){
 
 void deleteMovie(string title){
 	int toDelete = searchByTitle(title); 
-	writeln(toDelete); 
-	movieList[toDelete] = null ;
+	movieList = remove(movieList, toDelete);
 }
 
 /* Simple linear search that returns the index of a movie based on its title (if it exists). Returns -1 otherwise.
