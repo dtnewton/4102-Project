@@ -4,6 +4,7 @@ import std.conv;
 import std.string;
 import std.algorithm;
 import std.container; 
+import std.regex;
 
 Movie[] movieList;
 
@@ -36,7 +37,7 @@ void main()
 	do{
 			writeln("What would you like to do?\n");
 			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit"); 
-
+			write("Enter Choice: ");
 			readf("%d\n", &userChoice);
 
 			if(userChoice < 1 || userChoice > 6){
@@ -66,7 +67,7 @@ void main()
 						else
 						{
 							Movie found = movieList[searchByTitle(userInput.toLower())];
-							writeln(found.toString());
+							writeln("Movie Found: ", found.toString());
 						}
 					}
 					case(2): searchByGenre(userInput);
@@ -114,8 +115,9 @@ void main()
 			break; 
 
 		do{
-			writeln("What would you like to do next? ");
+			writeln("\nWhat would you like to do next? ");
 			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit");
+			write("Enter Choice: ");
 			readf("%d\n", &userChoice); 
 
 			if(userChoice < 1 || userChoice > 6){
@@ -197,7 +199,7 @@ void addNewMovie(){
 	writeln("\nEnter the genre: ");
 	readf("%s\n", &genre);
 	genre = strip(genre);
-	genre = genre.chomp(); 
+	genre = genre.chomp(); //both strip and chomp needed?
 
 	Movie newMovie = new Movie(title, director, yearReleased, duration, genre);
 	movieList ~= newMovie;
