@@ -11,7 +11,6 @@ Movie[] movieList;
 void main()
 {
 	
-	
 	//to read data from previous session
 	File fileIn = File("moviedata.txt", "r");
 	
@@ -33,22 +32,31 @@ void main()
 
 	int userChoice;
 	string userInput;
+	auto reg = regex("^[1-7]$"); //regex for input validation
 
 	do{
 			writeln("What would you like to do?\n");
-			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit"); 
-			write("Enter Choice: ");
-			readf("%d\n", &userChoice);
+			writeln("1) Display Full List of Movies\n2) Search for a movie\n3) Add a new movie\n4) Leave a review\n
+				     5) Update a movie's information\n6) Delete a movie\n7) Exit"); 
+						
+				write("Enter Choice: ");
+				readf("%d\n", &userChoice);
 
-			if(userChoice < 1 || userChoice > 6){
-				writeln("That input is invalid."); 
-			}
+				if(!(matchFirst(to!string(userChoice), reg)))
+				{
+					writeln("\nInvalid Choice!"); 
+				}		
 
-		} while(userChoice < 1 || userChoice > 6); 
+		}while(!(matchFirst(to!string(userChoice), reg))); 
 
 	do{
 		switch(userChoice){
 			case(1):{
+				writeln("\n");
+				displayMovieList();
+			}
+			break;
+			case(2):{
 				writeln("\nSearch by:\n");
 				writeln("1) By title\n2) By genre");
 
@@ -76,17 +84,17 @@ void main()
 			}
 			break; 
 
-			case(2):{
+			case(3):{
 				addNewMovie(); 
 			}
 			break;
 
-			case(3):{
+			case(4):{
 				addNewReview();
 			}
 			break;
 
-			case(4):{
+			case(5):{
 				writeln("\nEnter what you want to search for: ");
 				readf("%s\n", &userInput);
 				userInput = strip(userInput); 
@@ -95,7 +103,7 @@ void main()
 			}
 			break;
 
-			case(5):{
+			case(6):{
 				writeln("\nEnter the title you want to delete: ");
 				readf("%s\n", &userInput);
 				userInput = strip(userInput);
@@ -105,26 +113,26 @@ void main()
 
 			break;
 
-			case(6): userChoice = 6; 
+			case(7): userChoice = 7; 
 
 			default: break; 
 		}//end of switch
 
 		
-		if(userChoice == 6)
+		if(userChoice == 7)
 			break; 
 
 		do{
 			writeln("\nWhat would you like to do next? ");
-			writeln("1) Search for a movie\n2) Add a new movie\n3) Leave a review\n4) Update a movie's information\n5) Delete a movie\n6) Exit");
+			writeln("1) Display Full List of Movies\n2) Search for a movie\n3) Add a new movie\n4) Leave a review\n5) Update a movie's information\n6) Delete a movie\n7) Exit"); 
 			write("Enter Choice: ");
 			readf("%d\n", &userChoice); 
 
-			if(userChoice < 1 || userChoice > 6){
+			if(!(matchFirst(to!string(userChoice), reg))){
 				writeln("That input is invalid."); 
 			}
 
-		} while(userChoice < 1 || userChoice > 6); 
+		}while(!(matchFirst(to!string(userChoice), reg))); 
 
 	}while(true);
 
@@ -170,9 +178,19 @@ void main()
 }
 
 void addNewReview(){
+	writeln("\nNot Yet Implemented.");
 
 }
 
+void displayMovieList()
+{
+	writeln("\nAll Movies:");
+	writeln("--------------------------------");
+	for(int i; i < movieList.length; i++)
+	{
+		writeln(movieList[i].toString());
+	}
+}
 void addNewMovie(){
 	string title;
 	string genre;
@@ -208,6 +226,7 @@ void addNewMovie(){
 
 void editMovie(string title){
 	int movieIndex = searchByTitle(title.toLower());
+	auto editMovReg = regex("^[1-5]$");
 
 	if (movieIndex != -1) {
 		int editChoice;
@@ -216,10 +235,10 @@ void editMovie(string title){
 			writeln("What field would you like to alter?\n1) Title\n2) Genre\n3) Director\n4) Release Year\n5) Runtime\n");
 			readf("%d\n", &editChoice);
 
-			if(editChoice < 1 || editChoice > 5){
+			if(!(matchFirst(to!string(editChoice), editMovReg))){
 				writeln("That input is invalid."); 
 			}
-		} while (editChoice < 1 || editChoice > 5);
+		} while (!(matchFirst(to!string(editChoice), editMovReg)));
 
 		switch (editChoice) {
 			case(1): {
@@ -298,7 +317,7 @@ int searchByTitle(string title){
 }
 
 void searchByGenre(string genre){
-
+	writeln("\nNot Yet Implemented.");
 }
 
 class Movie{
