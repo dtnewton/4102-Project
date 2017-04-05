@@ -142,35 +142,21 @@ void main()
 	Movie temp;
 	for(int i; i < movieList.length; i++)
 	{
+
+		temp = movieList[i];
+				
+		fileOut.writeln(temp.getTitle());
+		fileOut.writeln(temp.getDirector());
+		fileOut.writeln(temp.getYearReleased());
+		fileOut.writeln(temp.getDuration());
 		if(i < movieList.length - 1)
 		{
-			if (movieList[i] is null) 
-			{
-				continue;
-			}
-			temp = movieList[i];
-			fileOut.writeln(temp.getTitle());
-			fileOut.writeln(temp.getDirector());
-			fileOut.writeln(temp.getYearReleased());
-			fileOut.writeln(temp.getDuration());
 			fileOut.writeln(temp.getGenre());
 		}
 		else
 		{
-			if (movieList[i] is null) 
-			{
-				continue;
-			}
-
-			temp = movieList[i];
-			fileOut.writeln(temp.getTitle());
-			fileOut.writeln(temp.getDirector());
-			fileOut.writeln(temp.getYearReleased());
-			fileOut.writeln(temp.getDuration());
 			fileOut.write(temp.getGenre());
-
-		}
-		
+		}		
 	}
 	fileOut.close();
 
@@ -291,7 +277,10 @@ void editMovie(string title){
 
 void deleteMovie(string title){
 	int toDelete = searchByTitle(title); 
+	Movie m = movieList[toDelete];//temp record of deleted entry
 	movieList = remove(movieList, toDelete);
+	writeln("\nDeleted: ", m.toString());
+
 }
 
 /* Simple linear search that returns the index of a movie based on its title (if it exists). Returns -1 otherwise.
@@ -403,7 +392,7 @@ class Movie{
 		movieStr ~= "(";
 		movieStr ~= to!string(this.yearReleased);
 		movieStr ~= ")";
-		movieStr ~= " - Directed By ";
+		movieStr ~= "- Directed By ";
 		movieStr ~= this.director;
 		movieStr ~= " - Runtime: ";
 		movieStr ~= to!string(this.getDuration);
@@ -411,6 +400,6 @@ class Movie{
 		return movieStr;
 	}
 
-	//TODO - Deconstruct?
+	//TODO - Destruct?
 
 }
