@@ -30,44 +30,43 @@ void main()
 	}
 	fileIn.close();
 
-	int userChoice;
+	string userChoice;
 	string userInput;
 	auto reg = regex("^[1-7]$"); //regex for input validation
 
 	do{
 			writeln("What would you like to do?\n");
-			writeln("1) Display Full List of Movies\n2) Search for a movie\n3) Add a new movie\n4) Leave a review\n
-				     5) Update a movie's information\n6) Delete a movie\n7) Exit"); 
+			writeln("1) Display Full List of Movies\n2) Search for a movie\n3) Add a new movie\n4) Leave a review\n5) Update a movie's information\n6) Delete a movie\n7) Exit"); 
 						
 				write("Enter Choice: ");
-				readf("%d\n", &userChoice);
+				readf("%s\n", &userChoice);
 
-				if(!(matchFirst(to!string(userChoice), reg)))
+				if(!(matchFirst(userChoice, reg)))
 				{
 					writeln("\nInvalid Choice!"); 
 				}		
 
-		}while(!(matchFirst(to!string(userChoice), reg))); 
+		}while(!(matchFirst(userChoice, reg))); 
 
 	do{
 		switch(userChoice){
-			case(1):{
+			case("1"):{
 				writeln("\n");
 				displayMovieList();
 			}
 			break;
-			case(2):{
+			case("2"):{
 				writeln("\nSearch by:\n");
 				writeln("1) By title\n2) By genre");
 
-				readf("%d\n", &userChoice);
+				readf("%s\n", &userChoice);
 
 				writeln("\nEnter what you want to search for: ");
 				readf("%s\n", &userInput);
 				userInput = strip(userInput); 
 
 				switch(userChoice){
-					case(1):{
+					case("1"):{
 						 if (searchByTitle(userInput.toLower()) == -1)
 						{
 							writeln("Not Found.");
@@ -78,23 +77,23 @@ void main()
 							writeln("Movie Found: ", found.toString());
 						}
 					}
-					case(2): searchByGenre(userInput);
+					case("2"): searchByGenre(userInput);
 					default: break; 
 				}
 			}
 			break; 
 
-			case(3):{
+			case("3"):{
 				addNewMovie(); 
 			}
 			break;
 
-			case(4):{
+			case("4"):{
 				addNewReview();
 			}
 			break;
 
-			case(5):{
+			case("5"):{
 				writeln("\nEnter what you want to search for: ");
 				readf("%s\n", &userInput);
 				userInput = strip(userInput); 
@@ -103,7 +102,7 @@ void main()
 			}
 			break;
 
-			case(6):{
+			case("6"):{
 				writeln("\nEnter the title you want to delete: ");
 				readf("%s\n", &userInput);
 				userInput = strip(userInput);
@@ -113,26 +112,26 @@ void main()
 
 			break;
 
-			case(7): userChoice = 7; 
+			case("7"): userChoice = "7"; 
 
 			default: break; 
 		}//end of switch
 
 		
-		if(userChoice == 7)
+		if(userChoice == "7")
 			break; 
 
 		do{
 			writeln("\nWhat would you like to do next? ");
 			writeln("1) Display Full List of Movies\n2) Search for a movie\n3) Add a new movie\n4) Leave a review\n5) Update a movie's information\n6) Delete a movie\n7) Exit"); 
 			write("Enter Choice: ");
-			readf("%d\n", &userChoice); 
+			readf("%s\n", &userChoice); 
 
-			if(!(matchFirst(to!string(userChoice), reg))){
+			if(!(matchFirst(userChoice, reg))){
 				writeln("That input is invalid."); 
 			}
 
-		}while(!(matchFirst(to!string(userChoice), reg))); 
+		}while(!(matchFirst(userChoice, reg))); 
 
 	}while(true);
 
@@ -229,19 +228,19 @@ void editMovie(string title){
 	auto editMovReg = regex("^[1-5]$");
 
 	if (movieIndex != -1) {
-		int editChoice;
+		string editChoice;
 
 		do {
 			writeln("What field would you like to alter?\n1) Title\n2) Genre\n3) Director\n4) Release Year\n5) Runtime\n");
-			readf("%d\n", &editChoice);
+			readf("%s\n", &editChoice);
 
-			if(!(matchFirst(to!string(editChoice), editMovReg))){
+			if(!(matchFirst(editChoice, editMovReg))){
 				writeln("That input is invalid."); 
 			}
-		} while (!(matchFirst(to!string(editChoice), editMovReg)));
+		} while (!(matchFirst(editChoice, editMovReg)));
 
 		switch (editChoice) {
-			case(1): {
+			case("1"): {
 
 				writeln("Enter the new title: \n");
 				string newTitle;
@@ -250,7 +249,7 @@ void editMovie(string title){
 			}
 			break;
 
-			case(2): {
+			case("2"): {
 				writeln("Enter the new genre: \n");
 				string newGenre;
 				readf("%s\n", &newGenre);
@@ -258,7 +257,7 @@ void editMovie(string title){
 			}
 			break;
 
-			case(3): {
+			case("3"): {
 				writeln("Enter the new director: \n");
 				string newDirector;
 				readf("%s\n", &newDirector);
@@ -266,7 +265,7 @@ void editMovie(string title){
 			}
 			break;
 
-			case(4): {
+			case("4"): {
 				writeln("Enter the new release year: \n");
 				uint newRelease;
 				readf("%d\n", &newRelease);
@@ -274,7 +273,7 @@ void editMovie(string title){
 			}
 			break;
 
-			case(5): {
+			case("5"): {
 				writeln("Enter the new runtime: \n");
 				uint newDuration;
 				readf("%d\n", &newDuration);
