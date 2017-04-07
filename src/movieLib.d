@@ -270,9 +270,16 @@ void editMovie(string title){
 
 void deleteMovie(string title){
 	int toDelete = searchExact(title); 
-	Movie m = movieList[toDelete];//temp record of deleted entry
-	movieList = remove(movieList, toDelete);
-	writeln("\nDeleted: ", m.toString());
+	if(toDelete != -1)
+	{
+		Movie m = movieList[toDelete];//temp record of deleted entry
+		movieList = remove(movieList, toDelete);
+		writeln("\nDeleted: ", m.toString());
+	}
+	else
+	{
+		writeln("\n", title, " not found.\n");
+	}
 
 }
 
