@@ -297,19 +297,18 @@ int searchExact(string title){
 	return -1;
 }
 
-void search(string s, int t){
+void search(string searchStr, int typeOfSearch){
 	
-
-	auto r = regex(s);
+	auto r = regex(searchStr);
 	Movie[] searchRecord;
 	Movie temp;
 	int count = 0; 
 	for(int i; i < movieList.length; i++)
 	{
 		temp = movieList[i];
-		if(t == 1)//title
+		if(typeOfSearch == 1)//title
 		{
-			if((matchFirst(temp.getTitle().toLower(), s))) //ignore case?
+			if((matchFirst(temp.getTitle().toLower(), searchStr))) //ignore case?
 			{
 				searchRecord ~= temp;
 				count++;
@@ -317,7 +316,7 @@ void search(string s, int t){
 		}
 		else//genre
 		{
-			if((matchFirst(temp.getGenre().toLower(), s))) //ignore case?
+			if((matchFirst(temp.getGenre().toLower(), searchStr))) //ignore case?
 			{
 				searchRecord ~= temp;
 				count++;
@@ -334,10 +333,6 @@ void search(string s, int t){
 		
 		writeln(searchRecord[i].toString());	
 	}
-}
-
-void searchByGenre(string genre){
-	writeln("\nNot Yet Implemented.");
 }
 
 class Movie{
