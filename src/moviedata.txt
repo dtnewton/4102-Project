@@ -13,18 +13,23 @@ Christopher Nolan
 2014
 169
 Sci-Fi
-Matrix, The
-The Wachowski Brothers
-1999
-136
-Sci-Fi
 Office Space
 Mike Judge
 1999
 89
 Comedy
-Star Wars
+Star Wars: A New Hope
 George Lucas
 1977
 121
+Sci-Fi
+Star Wars: Return of the Jedi
+Richard Marquand
+1983
+131
+Sci-Fi
+Star Wars: The Empire Strikes Back
+Irvin Kershner
+1980
+124
 Sci-Fi

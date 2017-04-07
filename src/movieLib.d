@@ -67,17 +67,10 @@ void main()
 
 				switch(userChoice){
 					case("1"):{
-						 if (searchByTitle(userInput.toLower()) == -1)
-						{
-							writeln("Not Found.");
-						}
-						else
-						{
-							Movie found = movieList[searchByTitle(userInput.toLower())];
-							writeln("Movie Found: ", found.toString());
-						}
+						search(userInput.toLower(),1);
 					}
-					case("2"): searchByGenre(userInput);
+					break;
+					case("2"): search(userInput.toLower(),2);
 					default: break; 
 				}
 			}
@@ -210,7 +203,7 @@ void addNewMovie(){
 }
 
 void editMovie(string title){
-	int movieIndex = searchByTitle(title.toLower());
+	int movieIndex = searchExact(title.toLower());
 	auto editMovReg = regex("^[1-5]$");
 
 	if (movieIndex != -1) {
@@ -276,7 +269,7 @@ void editMovie(string title){
 }
 
 void deleteMovie(string title){
-	int toDelete = searchByTitle(title); 
+	int toDelete = searchExact(title); 
 	Movie m = movieList[toDelete];//temp record of deleted entry
 	movieList = remove(movieList, toDelete);
 	writeln("\nDeleted: ", m.toString());
@@ -286,7 +279,7 @@ void deleteMovie(string title){
 /* Simple linear search that returns the index of a movie based on its title (if it exists). Returns -1 otherwise.
    Can expand on this if required.
 */
-int searchByTitle(string title){
+int searchExact(string title){
 
 	Movie temp;
 	
@@ -302,6 +295,45 @@ int searchByTitle(string title){
 	}
 
 	return -1;
+}
+
+void search(string s, int t){
+	
+
+	auto r = regex(s);
+	Movie[] searchRecord;
+	Movie temp;
+	int count = 0; 
+	for(int i; i < movieList.length; i++)
+	{
+		temp = movieList[i];
+		if(t == 1)//title
+		{
+			if((matchFirst(temp.getTitle().toLower(), s))) //ignore case?
+			{
+				searchRecord ~= temp;
+				count++;
+			}
+		}
+		else//genre
+		{
+			if((matchFirst(temp.getGenre().toLower(), s))) //ignore case?
+			{
+				searchRecord ~= temp;
+				count++;
+			}
+
+		}
+		//can add more search types		
+	}
+
+	writeln("\nResults Found: ", count);
+	write("--------------------------------\n");
+	for(int i; i < searchRecord.length; i++)
+	{
+		
+		writeln(searchRecord[i].toString());	
+	}
 }
 
 void searchByGenre(string genre){
@@ -369,8 +401,9 @@ class Movie{
 	}
 
 	//opCmp overload -- for use with sorting (by title)
-	int opCmp(ref const Movie other) const
+	override int opCmp(Object o)
 	{
+		Movie other = cast(Movie)o;
 		if(this.title > other.title)
 		{
 			return 1;
@@ -392,7 +425,7 @@ class Movie{
 		movieStr ~= "(";
 		movieStr ~= to!string(this.yearReleased);
 		movieStr ~= ")";
-		movieStr ~= "- Directed By ";
+		movieStr ~= " - Directed By ";
 		movieStr ~= this.director;
 		movieStr ~= " - Runtime: ";
 		movieStr ~= to!string(this.getDuration);
