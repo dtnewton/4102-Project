@@ -10,7 +10,15 @@ Movie[] movieList;
 
 void main()
 {
+	File splashDisp = File("splash", "r");
 	
+	while(!splashDisp.eof())
+	{
+		string s 	= chomp(splashDisp.readln());
+		writeln(s);
+	}
+	splashDisp.close();
+	writeln("---------------------------------------------");
 	//to read data from previous session
 	File fileIn = File("moviedata.txt", "r");
 	
@@ -297,7 +305,6 @@ int searchExact(string title){
 		if(temp.getTitle().toLower() == title) //ignore case?
 		{
 			return i;
-			break;
 		}		
 	}
 
