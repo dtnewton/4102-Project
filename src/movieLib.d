@@ -29,11 +29,14 @@ void main()
 		string yearStr      = chomp(fileIn.readln());
 		string durationStr  = chomp(fileIn.readln());
 		string genre 		= chomp(fileIn.readln());
+		string ratingStr 	= chomp(fileIn.readln());
 
 		uint year = to!uint(yearStr);
 		uint dur  = to!uint(durationStr);
+		float rating = to!float(ratingStr);
 
-		Movie movie = new Movie(movtitle, movdirector, year, dur, genre);
+
+		Movie movie = new Movie(movtitle, movdirector, year, dur, genre, rating);
 		movieList ~= movie; //adds movie to the list
 	}
 	fileIn.close();
@@ -150,13 +153,14 @@ void main()
 		fileOut.writeln(temp.getDirector());
 		fileOut.writeln(temp.getYearReleased());
 		fileOut.writeln(temp.getDuration());
+		fileOut.writeln(temp.getGenre());
 		if(i < movieList.length - 1)
 		{
-			fileOut.writeln(temp.getGenre());
+			fileOut.writeln(temp.getRating());
 		}
 		else
 		{
-			fileOut.write(temp.getGenre());
+			fileOut.write(temp.getRating());
 		}		
 	}
 	fileOut.close();
@@ -164,7 +168,23 @@ void main()
 }
 
 void addNewReview(){
-	writeln("\nNot Yet Implemented.");
+	string userInput; 
+	writeln("\nEnter what title you want to rate: ");
+	readf("%s\n", &userInput);
+	userInput = strip(userInput); 
+
+	int element = searchExact(userInput); 
+	float rating; 
+	if(element == -1){
+		writeln("Title not found.");
+	}
+	else{
+		Movie currentMovie = movieList[element]; 
+		writeln("What is your rating? ");
+		readf("%f\n", &rating);
+		currentMovie.addRating(rating); 
+
+	}
 
 }
 
@@ -183,6 +203,7 @@ void addNewMovie(){
 	string director;
 	uint yearReleased; 
 	uint duration;
+	int rating; 
 
 	writeln("\nEnter the title: ");
 	readf("%s\n", &title);
@@ -200,12 +221,16 @@ void addNewMovie(){
 	//probably writing an EOL to file
 	readf("%d\n", &duration);
 
+	writeln("\nEnter your rating on a scale of 0 - 5: ");
+	//probably writing an EOL to file
+	readf("%f\n", &rating);
+
 	writeln("\nEnter the genre: ");
 	readf("%s\n", &genre);
 	genre = strip(genre);
 	genre = genre.chomp(); //both strip and chomp needed?
 
-	Movie newMovie = new Movie(title, director, yearReleased, duration, genre);
+	Movie newMovie = new Movie(title, director, yearReleased, duration, genre, rating);
 	movieList ~= newMovie;
 	movieList.sort();
 }
@@ -302,7 +327,7 @@ int searchExact(string title){
 	{
 		temp = movieList[i];
 
-		if(temp.getTitle().toLower() == title) //ignore case?
+		if(temp.getTitle().toLower() == title.toLower()) //ignore case?
 		{
 			return i;
 		}		
@@ -356,16 +381,20 @@ class Movie{
 	private string director ;
 	private uint yearReleased;
 	private uint duration;
+	private float rating; 
+	private int ratingCount = 0; 
 	
  
 
 	//this() is used to define a constructor 
-	this(string title, string director, uint yearReleased, uint duration, string genre){
+	this(string title, string director, uint yearReleased, uint duration, string genre, float rating){
 		this.title = title;
 		this.genre = genre; 
 		this.director = director;
 		this.yearReleased = yearReleased;
 		this.duration = duration;
+		this.rating = rating; 
+		ratingCount = ratingCount ++; 
 	}
 
 	//some getters 
@@ -396,6 +425,9 @@ class Movie{
 	uint getYearReleased(){
 		return yearReleased;
 	}
+	float getRating(){
+		return rating;
+	}
 
 	void setYearReleased(uint newRelease){
 		this.yearReleased = newRelease;
@@ -407,6 +439,12 @@ class Movie{
 
 	void setDuration(uint newDuration){
 		this.duration = newDuration;
+	}
+
+	void addRating(float r){
+		ratingCount ++;
+		this.rating = (this.rating + r)/ ratingCount;
+
 	}
 
 	//opCmp overload -- for use with sorting (by title)
@@ -436,9 +474,15 @@ class Movie{
 		movieStr ~= ")";
 		movieStr ~= " - Directed By ";
 		movieStr ~= this.director;
+		movieStr ~= " - Genre: ";
+		movieStr ~= this.genre; 
 		movieStr ~= " - Runtime: ";
 		movieStr ~= to!string(this.getDuration);
-		movieStr ~= " minutes.";
+		movieStr ~= " minutes";
+		movieStr ~= " - Rating: ";
+		movieStr ~= to!string(this.getRating);
+		
+		
 		return movieStr;
 	}
 
