@@ -30,13 +30,15 @@ void main()
 		string durationStr  = chomp(fileIn.readln());
 		string genre 		= chomp(fileIn.readln());
 		string ratingStr 	= chomp(fileIn.readln());
+		string ratingCountStr  = chomp(fileIn.readln());
 
-		uint year = to!uint(yearStr);
-		uint dur  = to!uint(durationStr);
-		float rating = to!float(ratingStr);
+		uint year 		= to!uint(yearStr);
+		uint dur 		= to!uint(durationStr);
+		float rating 	= to!float(ratingStr);
+		int ratingCount = to!int(ratingCountStr);
 
 
-		Movie movie = new Movie(movtitle, movdirector, year, dur, genre, rating);
+		Movie movie = new Movie(movtitle, movdirector, year, dur, genre, rating, ratingCount);
 		movieList ~= movie; //adds movie to the list
 	}
 	fileIn.close();
@@ -154,13 +156,14 @@ void main()
 		fileOut.writeln(temp.getYearReleased());
 		fileOut.writeln(temp.getDuration());
 		fileOut.writeln(temp.getGenre());
+		fileOut.writeln(temp.getRating());
 		if(i < movieList.length - 1)
 		{
-			fileOut.writeln(temp.getRating());
+			fileOut.writeln(temp.getRatingCount());
 		}
 		else
 		{
-			fileOut.write(temp.getRating());
+			fileOut.write(temp.getRatingCount());
 		}		
 	}
 	fileOut.close();
@@ -169,20 +172,40 @@ void main()
 
 void addNewReview(){
 	string userInput; 
+	float rating;
+	auto reg = regex(["(\\d)+.?(\\d)?"]);
 	writeln("\nEnter what title you want to rate: ");
 	readf("%s\n", &userInput);
 	userInput = strip(userInput); 
 
 	int element = searchExact(userInput); 
-	float rating; 
+	string ratingS; 
 	if(element == -1){
 		writeln("Title not found.");
 	}
 	else{
 		Movie currentMovie = movieList[element]; 
+		do
+		{
 		writeln("What is your rating? ");
-		readf("%f\n", &rating);
-		currentMovie.addRating(rating); 
+		ratingS = chomp(readln());
+		if (matchFirst(ratingS, reg))
+		{
+			rating = to!float(ratingS);
+			if(rating > 5 || rating < 0)
+			{
+				writeln("Invalid Rating.");
+			}
+			else
+			{
+				currentMovie.addRating(rating); 			
+			}		
+		}
+		else{
+			writeln("Invalid Rating.");
+		}
+		}while(rating > 5 || rating < 0);
+		
 
 	}
 
@@ -201,9 +224,11 @@ void addNewMovie(){
 	string title;
 	string genre;
 	string director;
+	string yearReleasedStr;
+	string runtimeStr;
 	uint yearReleased; 
 	uint duration;
-	int rating; 
+	float rating; 
 
 	writeln("\nEnter the title: ");
 	readf("%s\n", &title);
@@ -214,23 +239,48 @@ void addNewMovie(){
 	director = strip(director);  
 
 	//TODO - Input Validation?
-	writeln("\nEnter the release year: ");
-	readf("%d\n", &yearReleased); 
+	do
+	{
+		writeln("\nEnter the release year: ");
+		yearReleasedStr = chomp(readln());
+		yearReleasedStr = replaceAll(yearReleasedStr, regex([`\D`]), "");
+		if (yearReleasedStr != "")
+		{
+			yearReleased = to!int(yearReleasedStr);
+		}
+		else
+		{
+			writeln("Invalid Input.");
+			yearReleased = 0;
+		}
 
-	writeln("\nEnter the running time: ");
-	//probably writing an EOL to file
-	readf("%d\n", &duration);
+	}while(yearReleased <= 0);
 
-	writeln("\nEnter your rating on a scale of 0 - 5: ");
-	//probably writing an EOL to file
-	readf("%f\n", &rating);
+	do
+	{
+		writeln("\nEnter the runtime: ");
+		runtimeStr = chomp(readln());
+		runtimeStr = replaceAll(runtimeStr, regex([`\D`]), "");
+		if (runtimeStr != "")
+		{
+			duration = to!int(runtimeStr);
+		}
+		else
+		{
+			writeln("Invalid Input.");
+			duration = 0;
+		}
+
+	}while(duration <= 0);
+
+	
 
 	writeln("\nEnter the genre: ");
 	readf("%s\n", &genre);
 	genre = strip(genre);
-	genre = genre.chomp(); //both strip and chomp needed?
+	genre = genre.chomp(); 
 
-	Movie newMovie = new Movie(title, director, yearReleased, duration, genre, rating);
+	Movie newMovie = new Movie(title, director, yearReleased, duration, genre, 0, 0);
 	movieList ~= newMovie;
 	movieList.sort();
 }
@@ -258,6 +308,7 @@ void editMovie(string title){
 				string newTitle;
 				readf("%s\n", &newTitle);
 				movieList[movieIndex].setTitle(newTitle);
+				movieList.sort();
 			}
 			break;
 
@@ -278,18 +329,51 @@ void editMovie(string title){
 			break;
 
 			case("4"): {
-				writeln("Enter the new release year: \n");
-				uint newRelease;
-				readf("%d\n", &newRelease);
-				movieList[movieIndex].setYearReleased(newRelease);
+				
+				uint yearReleased;
+				string yearReleasedStr;
+				do{
+	
+						writeln("\nEnter the release year: ");
+						yearReleasedStr = chomp(readln());
+						yearReleasedStr = replaceAll(yearReleasedStr, regex([`\D`]), "");
+						if (yearReleasedStr != "")
+						{
+							yearReleased = to!int(yearReleasedStr);
+							movieList[movieIndex].setYearReleased(yearReleased);
+						}
+						else
+						{
+							writeln("Invalid Input.");
+							yearReleased = 0;
+						}
+
+				}while(yearReleased <= 0);
 			}
 			break;
 
 			case("5"): {
 				writeln("Enter the new runtime: \n");
 				uint newDuration;
-				readf("%d\n", &newDuration);
-				movieList[movieIndex].setDuration(newDuration);
+				string runtimeStr;
+				
+				do
+				{
+					writeln("\nEnter the runtime: ");
+					runtimeStr = chomp(readln());
+					runtimeStr = replaceAll(runtimeStr, regex([`\D`]), "");
+					if (runtimeStr != "")
+					{
+						newDuration = to!int(runtimeStr);
+						movieList[movieIndex].setDuration(newDuration);
+					}
+					else
+					{
+						writeln("Invalid Input.");
+						newDuration = 0;
+					}
+
+				}while(newDuration <= 0);
 			}
 			break;
 
@@ -382,19 +466,19 @@ class Movie{
 	private uint yearReleased;
 	private uint duration;
 	private float rating; 
-	private int ratingCount = 0; 
+	private int ratingCount; 
 	
  
 
 	//this() is used to define a constructor 
-	this(string title, string director, uint yearReleased, uint duration, string genre, float rating){
+	this(string title, string director, uint yearReleased, uint duration, string genre, float rating, int ratingCount){
 		this.title = title;
 		this.genre = genre; 
 		this.director = director;
 		this.yearReleased = yearReleased;
 		this.duration = duration;
 		this.rating = rating; 
-		ratingCount = ratingCount ++; 
+		this.ratingCount = ratingCount++; 
 	}
 
 	//some getters 
@@ -428,6 +512,9 @@ class Movie{
 	float getRating(){
 		return rating;
 	}
+	int getRatingCount(){
+		return this.ratingCount;
+	}
 
 	void setYearReleased(uint newRelease){
 		this.yearReleased = newRelease;
@@ -442,6 +529,8 @@ class Movie{
 	}
 
 	void addRating(float r){
+		
+		this.rating = this.rating * ratingCount;
 		ratingCount ++;
 		this.rating = (this.rating + r)/ ratingCount;
 
