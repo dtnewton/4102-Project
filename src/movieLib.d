@@ -160,11 +160,18 @@ void main()
 			readf("%s\n", &genre);
 			genre = strip(genre);
 			genre = formatInput(genre);
-	
-			Movie newMovie = new Movie(title, director, yearReleased, duration, genre,0,0);
-			movieList.add(newMovie);
 			
-			writeln("\nSuccessfully Added: ", newMovie.toString(), "\n");
+			Movie newMovie = new Movie(title, director, yearReleased, duration, genre,0,0);
+			
+			if(movieList.searchExact(title) == -1)
+			{
+				movieList.add(newMovie);
+				writeln("\nSuccessfully Added: ", newMovie.toString(), "\n");
+			} 
+			else 
+			{
+				writeln("\nDuplicate Entry Detected --- Failed to add movie.\n");//duplicates only based on title at this point
+			}			
 		}
 		else if(userChoice == "4")
 		{

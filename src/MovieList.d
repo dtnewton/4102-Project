@@ -23,8 +23,6 @@ class MovieList
 
 	}
 
-
-
 	void add(Movie m)
 	{
 		this.movieList ~= m;
@@ -214,8 +212,7 @@ class MovieList
 
 	void displayMovieList()
 	{
-		
-		
+			
 		write("All Movies:\n");
 		write("-------------------------------------------------------\n");
 		for(int i; i < movieList.length; i++)
