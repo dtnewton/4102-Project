@@ -39,62 +39,73 @@ class MovieList
 		int movieIndex = searchExact(title.toLower());
 		auto editMovReg = regex("^[1-5]$");
 
-		if (movieIndex != -1) {
+		if (movieIndex != -1) 
+		{
 			string editChoice;
 
 			do {
-				write("What field would you like to alter?\n1) Title\n2) Genre\n3) Director\n4) Release Year\n5) Runtime\n>");
+				write("\nWhat field would you like to alter?\n1) Title\n2) Genre\n3) Director\n4) Release Year\n5) Runtime\n>");
 				editChoice = strip(stdin.readln());
 
-				if(!(matchFirst(editChoice, editMovReg))){
-					writeln("That input is invalid.");
+				if(!(matchFirst(editChoice, editMovReg)))
+				{
+					writeln("\nThat input is invalid.\n");
 				}
+
 			} while (!(matchFirst(editChoice, editMovReg)));
 
-			if(editChoice is "1")
+			if(editChoice == "1")
 			{
-				write("Enter the new title: \n>");
+				write("\nEnter the new title: \n>");
 				string newTitle;
 				newTitle = strip(stdin.readln());
-				this.movieList[movieIndex].setTitle(newTitle);
+				newTitle = formatInput(newTitle);
+				movieList[movieIndex].setTitle(newTitle);
+				write("\n");
 
 			}
-			else if(editChoice is "2")
+			else if(editChoice == "2")
 			{
-				write("Enter the new genre: \n>");
+				write("\nEnter the new genre: \n>");
 				string newGenre;
 				newGenre = strip(stdin.readln());
+				newGenre = formatInput(newGenre);
 				movieList[movieIndex].setGenre(newGenre);
+				write("\n");
 
 			}
-			else if(editChoice is "3")
+			else if(editChoice == "3")
 			{
-				write("Enter the new director: \n>");
+				write("\nEnter the new director: \n>");
 				string newDirector;
 				newDirector = strip(stdin.readln());
+				newDirector = formatInput(newDirector);
 				movieList[movieIndex].setDirector(newDirector);
+				write("\n");
 			}
-			else if(editChoice is "4")
+			else if(editChoice == "4")
 			{
-				write("Enter the new release year: \n>");
+				write("\nEnter the new release year: \n>");
 				string newRelease;
 				newRelease = strip(stdin.readln()); //TODO - validate or catch
 				uint nr = to!uint(newRelease);
 				movieList[movieIndex].setYearReleased(nr);
+				write("\n");
 			}
-			else if(editChoice is "5")
+			else if(editChoice == "5")
 			{
-				write("Enter the new runtime: \n>");
+				write("\nEnter the new runtime: \n>");
 				string newDuration;
 				newDuration = strip(stdin.readln());//TODO - validate or catch
 				uint nd = to!uint(newDuration);
 				movieList[movieIndex].setDuration(nd);
+				write("\n");
 
 			}
 		}
 		else
 		{
-			writeln("Movie not found.\n");
+			writeln("\nMovie not found.\n");
 		}
 	}
 
@@ -221,5 +232,23 @@ class MovieList
 		}
 		writeln("-----------------------------------------------------\n");
 		
+	}
+
+	//formats strings for consistency
+	string formatInput(string s)
+	{
+		string formattedStr;
+		
+		auto splitStr = split(s);
+		for(int i = 0; i < splitStr.length; i++)
+		{
+			formattedStr ~= capitalize(splitStr[i].toLower());
+			if(i < splitStr.length - 1)
+			{
+				formattedStr ~= " ";
+			}			
+		}
+		
+		return formattedStr;	
 	}
 }

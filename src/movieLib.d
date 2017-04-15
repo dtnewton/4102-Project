@@ -115,12 +115,12 @@ void main()
 			write("\nEnter the title: \n>");
 			readf("%s\n", &title);
 			title = strip(title);			
-			title = formatInput(title);
+			title = movieList.formatInput(title);
 			
 			write("\nEnter the director: \n>");
 			readf("%s\n", &director);
 			director = strip(director);
-			director = formatInput(director);
+			director = movieList.formatInput(director);
 		
 			do
 			{
@@ -159,7 +159,7 @@ void main()
 			write("\nEnter the genre: \n>");
 			readf("%s\n", &genre);
 			genre = strip(genre);
-			genre = formatInput(genre);
+			genre = movieList.formatInput(genre);
 			
 			Movie newMovie = new Movie(title, director, yearReleased, duration, genre,0,0);
 			
@@ -170,7 +170,8 @@ void main()
 			} 
 			else 
 			{
-				writeln("\nDuplicate Entry Detected --- Failed to add movie.\n");//duplicates only based on title at this point
+				//duplicates only based on title at this point
+				writeln("\nDuplicate Entry Detected --- Failed to add movie.\n");
 			}			
 		}
 		else if(userChoice == "4")
@@ -248,20 +249,3 @@ void main()
 	stdin.readln();
 }
 
-//formats strings for consistency
-string formatInput(string s)
-{
-	string formattedStr;
-	
-	auto splitStr = split(s);
-	for(int i = 0; i < splitStr.length; i++)
-	{
-		formattedStr ~= capitalize(splitStr[i].toLower());
-		if(i < splitStr.length - 1)
-		{
-			formattedStr ~= " ";
-		}			
-	}
-	
-	return formattedStr;	
-}
