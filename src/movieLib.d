@@ -8,8 +8,20 @@ import std.regex;
 import Movie;
 import MovieList;
 
+/*
+ ITCS 4102 - SPRING 2017 - TERM PROJECT
+ authors: Matthew Johnson
+ 		  Matthew Smrzlick
+ 		  David Newton
+ 		  Daniel Cole
+ 		  Luis Gomez
+ purpose: simple data library using movie information
+ 		  for entries. supports basic crud and searching
+ 		  functionality.
+*/
 void main()
 {
+	
 	MovieList movieList = new MovieList(0);
 	
 	try
@@ -21,13 +33,12 @@ void main()
 			writeln(s);
 		}
 		splashDisp.close();
-		writeln("v0.95 2017");
+		writeln("v1.0 2017");
 		writeln("---------------------------------------------");
 	}
 	catch(Exception e)
 	{
-		writeln(e.msg, "\n");
-		
+		writeln(e.msg, "\n");	
 	}
 	
 	try
@@ -60,10 +71,11 @@ void main()
 	{
 		writeln(e.msg, "\n");
 	}
+
 	string userChoice;
 	string userInput;
 	auto continueRunning = 1;
-	auto reg = regex("^[1-7]$"); //regex for input validation
+	auto reg = regex("^[1-7]$"); 
 	do{
 		do
 		{
@@ -248,4 +260,3 @@ void main()
 	writeln("Press any key to exit.");
 	stdin.readln();
 }
-

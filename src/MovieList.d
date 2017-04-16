@@ -6,12 +6,11 @@ import Movie;
 import std.regex;
 import std.algorithm;
 
-class MovieList
-{
-
-	private Movie[] movieList;
-	private uint numMovies;
-
+class MovieList{
+private:
+	Movie[] movieList;
+	uint numMovies;
+public:
 	this(uint n)
 	{
 		this.numMovies = n;
@@ -85,23 +84,51 @@ class MovieList
 			}
 			else if(editChoice == "4")
 			{
-				write("\nEnter the new release year: \n>");
-				string newRelease;
-				newRelease = strip(stdin.readln()); //TODO - validate or catch
-				uint nr = to!uint(newRelease);
-				movieList[movieIndex].setYearReleased(nr);
+				int yearReleased;			
+				do
+				{
+					write("\nEnter the updated release year: \n>");
+					string yearReleasedStr = chomp(stdin.readln());
+					yearReleasedStr = replaceAll(yearReleasedStr, regex([`\D`]), "");
+					if (yearReleasedStr != "")
+					{
+						yearReleased = to!int(yearReleasedStr);
+						movieList[movieIndex].setYearReleased(yearReleased);
+					}
+					else
+					{
+						write("\nInvalid Input.\n");
+						yearReleased = 0;
+					}
+			
+				}while(yearReleased <= 0);
+				
 				write("\n");
 			}
 			else if(editChoice == "5")
 			{
-				write("\nEnter the new runtime: \n>");
-				string newDuration;
-				newDuration = strip(stdin.readln());//TODO - validate or catch
-				uint nd = to!uint(newDuration);
-				movieList[movieIndex].setDuration(nd);
-				write("\n");
+				int duration;
+				do
+				{
+					write("\nEnter the updated runtime: \n>");
+					string runtimeStr = chomp(stdin.readln());
+					runtimeStr = replaceAll(runtimeStr, regex([`\D`]), "");
+					if (runtimeStr != "")
+					{
+						duration = to!int(runtimeStr);
+						movieList[movieIndex].setDuration(duration);
+					}
+					else
+					{
+						write("\nInvalid Input.\n");
+						duration = 0;
+					}
+			
+				}while(duration <= 0);
 
+				write("\n");
 			}
+			write("Successfully Updated: ", movieList[movieIndex].toString(), "\n\n");	
 		}
 		else
 		{
@@ -188,7 +215,7 @@ class MovieList
 			temp = movieList[i];
 			if(typeOfSearch == 1)//title
 			{
-				if((matchFirst(temp.getTitle().toLower(), searchStr))) //ignore case?
+				if((matchFirst(temp.getTitle().toLower(), searchStr))) 
 				{
 					searchRecord ~= temp;
 					count++;
@@ -196,7 +223,7 @@ class MovieList
 			}
 			else//genre
 			{
-				if((matchFirst(temp.getGenre().toLower(), searchStr))) //ignore case?
+				if((matchFirst(temp.getGenre().toLower(), searchStr))) 
 				{
 					searchRecord ~= temp;
 					count++;
