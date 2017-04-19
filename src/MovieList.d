@@ -26,6 +26,7 @@ public:
 	{
 		this.movieList ~= m;
 		movieList.sort();
+		numMovies++;
 	}
 
 	Movie get(int i)
@@ -182,6 +183,7 @@ public:
 	void deleteMovie(int i)
 	{
 		this.movieList = remove(movieList, i);
+		numMovies--;
 	}
 
 	int searchExact(string title)
