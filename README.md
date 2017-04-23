@@ -1,4 +1,4 @@
-#**Setup for D**
+# **Setup for D**
 
 1. Go to http://dlang.org/ and install the compiler.
 	*it will ask for Visual Studio and SDK, you do not need these
@@ -7,7 +7,7 @@
 3. If you need a text editor, Sublime Text will format D nicely. https://www.sublimetext.com/
 4. Post your GitHub username in Slack so Matt can add you a collaborator.
 
-#**Workflow with D**
+# **Workflow with D**
 
 After you install the D compiler, you can begin creating files using Sublime Text or
 any other text editor. D language files use the suffix ".d". Once you have saved the
@@ -26,7 +26,7 @@ command ```dmd filename.d```. This will compile your code into an executable fil
 located in the same directory. You can then run the .exe by typing the filename
 along with the .exe extension.
 
-##**Working with Git**
+## **Working with Git**
 
 We will be using Git to collaborate on the project. To begin, you need to clone
 the current repository to your machine. Be sure you are currently in the 
@@ -49,7 +49,7 @@ and
 git config --global user.email "email associated with your GitHub account"
 ```
 
-#**Before you begin to change anything be sure to run "git pull" to pull changes other people may have made!**
+# **Before you begin to change anything be sure to run "git pull" to pull changes other people may have made!**
 
 Our .d files will be located in the ```src/``` directory. You should now be able to open
 them with your text editor. 
