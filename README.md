@@ -13,7 +13,15 @@
 
 	Our Movie Library also allows the user to enter
 	a rating from 1 to 5 on each movie and the library
-	will aggregate it with past ratings. 
+	will aggregate it with past ratings.
+
+## Running the Program
+	
+	Our program can be run in console by just running
+	the .exe file included. Source code files can be
+	compiled using the DMD compiler which can be
+	downloaded at dlang.org if you wish to compile
+	the source code yourself. 
 
 ## Menu
 	
